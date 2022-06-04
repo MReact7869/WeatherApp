@@ -1,5 +1,15 @@
 # Getting Started with Create React App
 
+First make sure your machine has node installed with latest version.\
+npm install -g npm.\
+npm install.\
+npm install react-bootstrap bootstrap.\
+npm start.
+
+![image](https://user-images.githubusercontent.com/106867298/171997751-028291d0-56bd-433e-83ba-622ea7f1e272.png)
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
