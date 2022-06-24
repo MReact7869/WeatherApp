@@ -3,10 +3,10 @@
 First make sure your machine has node installed with latest version.\
 npm install -g npm.\
 npm install.\
-npm install react-bootstrap bootstrap.\
 npm start.
 
-![image](https://user-images.githubusercontent.com/106867298/171997751-028291d0-56bd-433e-83ba-622ea7f1e272.png)
+![image](https://user-images.githubusercontent.com/106867298/175542413-e3312de6-dec3-4513-bef9-75526d82e6b6.png)
+
 
 
 
