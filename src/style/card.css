@@ -1,11 +1,18 @@
 .cards {
     display: flex; 
-    flex-direction: row;
-    gap: 10px;
+    flex-direction: column;
     overflow-y: auto;
     cursor: pointer;
+    width: fit-content;
+  
+
     }
    
-    .cards:hover{
-        border: 2px solid grey;
-    }
+  
+  .cards-img{
+    width:45%;
+    height:40%;
+  }
+  .body{
+    padding-bottom: 0%;
+  }

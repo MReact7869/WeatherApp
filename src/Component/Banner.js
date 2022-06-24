@@ -1,90 +1,110 @@
-import {useState } from "react";
+import {  useState } from "react";
 import CardComponent from "./Card";
-import { Container, Row, Col, Image, Badge } from 'react-bootstrap';
-import sun from '../Assets/sun.jpg';
-import high from '../Assets/high.png';
-import cloudy from '../Assets/cloudy.jpg';
-import normal from '../Assets/normal.png';
-import rainy from '../Assets/rainy.jpg';
+import ChartExample from '../Component/ChartExample';
+import { Container, Row, Col } from 'react-bootstrap';
 
-import sunGraph from '../Assets/sunGraph.png';
-import highGraph from '../Assets/highGraph.jpg';
-import normalGraph from '../Assets/normalGraph.gif';
-import cloudyGraph from '../Assets/cloudyGraph.jpg';
-import rainyGraph from '../Assets/rainyGraph.png';
-import normal1Graph from '../Assets/normal1graph.png';
+import loading from '../Assets/load.gif';
 import sun1Graph from '../Assets/sun1.jpg'
 import '../style/card.css';
 import '../style/banner.css'
+import HourData from "./HourData";
+import DetailCard from "./DetailCard";
+import CurrentData from "./CurrentData";
 
-const cardData = [
-    { id: 0, day: "Monday", temp: 37 , type: "Sunny", img: sun, graph: sun1Graph },
-    { id: 1, day: "Tuesday", temp: 40 , type: "Sunny (heatwave)", img: high, graph: highGraph },
-    { id: 2, day: "Wednesday", temp: 35, type: "Sunny", img: sun, graph: sunGraph },
-    { id: 3, day: "Thursday", temp: 29 , type: "Sunny and clear", img: normal, graph: normal1Graph },
-    { id: 4, day: "Friday", temp: 24 , type: "Sunny and clear", img: normal, graph: normalGraph },
-    { id: 5, day: "Saturday", temp: 21, type: "Cloudy", img: cloudy, graph: cloudyGraph },
-    { id: 6, day: "Sunday", temp: 18 , type: "Rainy", img: rainy, graph: rainyGraph },
-];
 
-const Banner = () => {
+
+
+const Banner = ({ apiData }) => {
+
+
     const [img, setImg] = useState(sun1Graph);
-    const [day, setDay] = useState("Monday");
-    const [weatherType, setWeathertype] = useState("Sunny");
-    const [temp, setTemp] = useState(37)
+    const [weatherType, setWeathertype] = useState('');
+    const [temp, setTemp] = useState('')
+    const [isLoading, setIsLoading] = useState(true);
+    const [sunrise, setSunrise] = useState('');
+    const [sunset, setSunset] = useState('');
+    const [moonPhase, setMoonPhase] = useState('');
+    const [date, setDate] = useState('')
+    const [moonrise, setMoonrise] = useState('')
+    const [moonset, setMoonset] = useState('')
+    const [id, setId] = useState(0);
+    
 
-    const cardClick = (data) => {
-        setImg(data.graph);
-        setDay(data.day);
-        setWeathertype(data.type);
-        setTemp(data.temp);
+    const cardClick = (data, index) => {
+        setId(index)
+        setImg(data.day.condition.icon);
+        setWeathertype(data.day.condition.text);
+        setTemp(data.day.maxtemp_c);
+        setIsLoading(false);
+        setSunrise(data.astro.sunrise);
+        setSunset(data.astro.sunset);
+        setMoonPhase(data.astro.moon_phase)
+        setMoonrise(data.astro.moonrise)
+        setMoonset(data.astro.moonset)
+        setDate(data.date);
     }
 
 
+
     return (
+       
         <>
-            <br />
-            <Container>
-                <Row>
-                    <Col>
-                        <h2><Badge bg="primary">
-                            {day} : {weatherType} weather.
-                        </Badge>
-                        </h2>
-                    </Col>
-                    <Col>
-                        <h2><Badge bg="primary">
-                         Tempreture : {temp} <span>&#176; C</span>
-                        </Badge>
-                        </h2>
-                    </Col>
-
-                </Row>
-            </Container>
-
-            <Container>
+            <Container >
                 <Row className="banner-image">
-                    <Image
-                        className="img"
-                        src={img} />
+                    <Col className="col-lg-6 col-md-12 col-sm-12">
+                        <DetailCard
+                            loading={loading}
+                            isLoading={isLoading}
+                            sunset={sunset}
+                            weatherType={weatherType}
+                            temp={temp}
+                            sunrise={sunrise}
+                            moonPhase={moonPhase}
+                            date={date}
+                            moonrise={moonrise}
+                            moonset={moonset}
+                            img={img}
+                        />
+                    </Col>
+                    <Col className="col-lg-6 col-md-12 col-sm-12">
+                        {apiData && apiData.forecast && apiData.forecast.forecastday &&
+                            apiData.forecast.forecastday[0] && (
+                                <HourData apiData={apiData} id={id} />
+                            )}
+                    </Col>
+                    <hr />
+                    <br></br>
+                    <Row >
+                        <Col>
+                            {
+                                apiData && apiData.forecast && apiData.forecast.forecastday && (
+                                    <ChartExample apiData={apiData} id={id} className="chart-area" />
+                                )}
+                        </Col>
+                    </Row>
                 </Row>
+
             </Container>
-            <br />
+  
             <Container>
-                <Row>
-                    {
-                        cardData.map((data) => {
-                            return (
-                                <CardComponent data={data} onClick={() => cardClick(data)} />
-
+                <Row >
+                    <Col className="cardComponent">
+                        {
+                            apiData && apiData.forecast && apiData.forecast.forecastday && (
+                                apiData.forecast.forecastday.map((data, index) => {
+                                    return (
+                                        <CardComponent data={data} key={data.date} onClick={() => cardClick(data, index)} />
+                                    )
+                                })
                             )
-                        })
-
-                    }
+                        }
+                    </Col>
+                    <Col>
+                       <CurrentData apiData={apiData} />
+                    </Col>
                 </Row>
             </Container>
-
-
+            
         </>
     )
 }

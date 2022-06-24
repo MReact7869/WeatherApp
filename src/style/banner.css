@@ -3,9 +3,39 @@
     width:100%;
     border: 2px solid black;
     border-radius: 15px;
+    padding: 10px;
   
 }
 .img{
     height:350px;
     width:400px;
 }
+.detail-img{
+    height:50px;
+    width:50px;
+}
+.chart-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+    height: 100%; 
+  }
+  
+  .chart-area {
+    min-width: 0;
+    overflow: hidden;
+  }
+  .cardComponent{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 576px) { 
+    .cardComponent{
+     flex-direction: column;
+     }}

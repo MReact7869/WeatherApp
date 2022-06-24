@@ -1,18 +1,34 @@
 import Card from 'react-bootstrap/Card'
+import { Row, Col } from 'react-bootstrap';
 import '../style/card.css';
 
 
 const CardComponent = (props) => {
-    console.log(props);
+
     return (
         <>
-            <Card style={{ width: '11.5rem'}} onClick={props.onClick} className='cards'>
-            <Card.Body>
-                <Card.Title style={{paddingLeft: "17px"}}>{props.data.day}</Card.Title>
-                <Card.Img variant="top" src={props.data.img} />
-                <Card.Title  style={{paddingLeft: "17px"}}>{props.data.temp} <span>&#176; C</span></Card.Title>
-                </Card.Body>
-            </Card> 
+            <Row >
+                <Col style={{padding: "20px"}}>
+                <Card onClick={props.onClick} className='cards'>
+                    <Card.Body className='body'>
+
+                        <Card.Title style={{ paddingLeft: "10px" }}>
+                            <h6>{props.data.date}</h6>
+                        </Card.Title>
+
+                        <Card.Img
+                            className='cards-img'
+                            variant="top"
+                            src={props.data.day.condition.icon} />
+
+                        <Card.Text style={{ paddingLeft: "10px" }}>
+                            Max. {props.data.day.maxtemp_c} <span>&#176;C</span><br />
+                            Min. {props.data.day.mintemp_c} <span>&#176;C</span>
+                        </Card.Text>
+                    </Card.Body>
+                </Card>
+            </Col>
+        </Row>
         </>
     )
 
