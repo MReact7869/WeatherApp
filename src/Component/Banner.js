@@ -16,7 +16,6 @@ import CurrentData from "./CurrentData";
 
 const Banner = ({ apiData }) => {
 
-
     const [img, setImg] = useState(sun1Graph);
     const [weatherType, setWeathertype] = useState('');
     const [temp, setTemp] = useState('')
@@ -29,7 +28,6 @@ const Banner = ({ apiData }) => {
     const [moonset, setMoonset] = useState('')
     const [id, setId] = useState(0);
     
-
     const cardClick = (data, index) => {
         setId(index)
         setImg(data.day.condition.icon);
